@@ -43,8 +43,9 @@ model_path = os.path.join(os.getcwd(), "saved_models", "xception.h5")
 model = tf.keras.models.load_model(model_path)
 
 estimator_path = os.path.join(os.getcwd(), "tfserving_dogs_cats_estimator")
-if not os.path.exists(estimator_path):
-    os.makedirs(estimator_path)
+if os.path.exists(estimator_path):
+    shutil.rmtree(estimator_path)
+os.makedirs(estimator_path)
 
 # Create an Estimator object
 estimator = tf.keras.estimator.model_to_estimator(
@@ -56,6 +57,8 @@ for file_name in os.listdir(gen_folder):
     shutil.copy(os.path.join(gen_folder, file_name), estimator_path)
 
 export_path = os.path.join(os.getcwd(), "tfserving_dogs_cats_models", "1")
+if os.path.exists(export_path):
+    shutil.rmtree(export_path)
 estimator.export_savedmodel(
     export_path, serving_input_receiver_fn=serving_input_receiver_fn)
 

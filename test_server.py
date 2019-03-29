@@ -4,6 +4,7 @@ import base64
 import requests
 
 server_endpoint = 'http://localhost:8080/invocations'
+server_endpoint = 'http://localhost:8081/classifier-predict/'
 img_paths = [
     os.path.join(os.getcwd(), "testdata", "dog.jpg")
 ]
@@ -17,7 +18,9 @@ for path in img_paths:
 
 # Create payload request
 payload = json.dumps({"instances": data_samples})
+print(payload)
 
 # Send prediction request
 r = requests.post(server_endpoint, data=payload)
+print(r.content)
 print(json.loads(r.content))
