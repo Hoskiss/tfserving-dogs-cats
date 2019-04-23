@@ -1,3 +1,3 @@
 # tfserving_dogs_cats
 
-bash ./run.sh to go
+to start service: bash ./run.sh
