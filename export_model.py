@@ -2,6 +2,8 @@ import os
 import shutil
 import tensorflow as tf
 (HEIGHT, WIDTH, CHANNELS) = (299, 299, 3)
+MODEL_PATH = os.path.join(os.getcwd(), "saved_models", "xception.h5")
+
 
 def serving_input_receiver_fn():
     """Convert string encoded images (like base64 strings) into preprocessed tensors"""
@@ -39,8 +41,7 @@ def serving_input_receiver_fn():
 
 # The export path contains the name and the version of the model
 tf.keras.backend.set_learning_phase(0) # Ignore dropout at inference
-model_path = os.path.join(os.getcwd(), "saved_models", "xception.h5")
-model = tf.keras.models.load_model(model_path)
+model = tf.keras.models.load_model(MODEL_PATH)
 
 estimator_path = os.path.join(os.getcwd(), "tfserving_dogs_cats_estimator")
 if os.path.exists(estimator_path):
